@@ -37,9 +37,10 @@ public class AdminMemberController {
 
         if (result <= 0) {
             nextPage = "admin/member/create_account_ng";
+            log.info("=====ADMIN ACCOUNT CREATION FAILED=====");
+        } else {
+            log.info("=====ADMIN ACCOUNT CREATED SUCCESSFULLY=====");
         }
-
-        log.info("=====ADMIN ACCOUNT CREATED SUCCESSFULLY=====");
         return nextPage;
     }
 
