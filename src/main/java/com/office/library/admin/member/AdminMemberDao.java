@@ -41,7 +41,6 @@ public class AdminMemberDao {
         if (adminMemberVo.getA_m_id().equals("super admin")) {
             sql = "INSERT INTO tbl_admin_member(a_m_approval, a_m_id, a_m_pw, a_m_name, a_m_gender, a_m_part, a_m_position, a_m_mail, a_m_phone, a_m_reg_date, a_m_mod_date) "
                     + "VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
-            args.add("1"); // a_m_approval 값을 문자열로 추가
         } else {
             sql = "INSERT INTO tbl_admin_member(a_m_id, a_m_pw, a_m_name, a_m_gender, a_m_part, a_m_position, a_m_mail, a_m_phone, a_m_reg_date, a_m_mod_date) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
