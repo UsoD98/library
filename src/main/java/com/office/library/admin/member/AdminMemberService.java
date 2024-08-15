@@ -33,4 +33,19 @@ public class AdminMemberService {
             return ADMIN_ACCOUNT_ALREADY_EXIST;
         }
     }
+
+    public AdminMemberVo loginConfirm(AdminMemberVo adminMemberVo) {
+        log.info("==========[AdminMemberService] HAS BEEN CALLED==========");
+        log.info("===================METHOD: loginConfirm()===================");
+
+        AdminMemberVo loginedAdminMemberVo = adminMemberDao.selectAdmin(adminMemberVo);
+
+        if(loginedAdminMemberVo != null) {
+            log.info("=====ADMIN LOGIN SUCCESS=====");
+        } else {
+            log.info("=====ADMIN LOGIN FAILED=====");
+        }
+
+        return loginedAdminMemberVo;
+    }
 }
