@@ -21,10 +21,10 @@ public class UserMemberService {
 
         boolean isMember = userMemberDao.isUserMember(userMemberVo.getU_m_id());
 
-        if(!isMember) {
+        if (!isMember) {
             int result = userMemberDao.insertUserAccount(userMemberVo);
 
-            if(result > 0) {
+            if (result > 0) {
                 return USER_ACCOUNT_CREATE_SUCCESS;
             } else {
                 return USER_ACCOUNT_CREATE_FAIL;
@@ -32,5 +32,20 @@ public class UserMemberService {
         } else {
             return USER_ACCOUNT_ALREADY_EXIST;
         }
+    }
+
+    // 로그인 확인
+    public UserMemberVo loginConfirm(UserMemberVo userMemberVo) {
+        log.info("[UserMemberService] loginConfirm HAS BEEN CALLED");
+
+        UserMemberVo loginedUserMemberVo = userMemberDao.selectUser(userMemberVo);
+
+        if (loginedUserMemberVo != null) {
+            log.info("[UserMemberService] loginConfirm SUCCESS");
+        } else {
+            log.info("[UserMemberService] loginConfirm FAIL");
+        }
+
+        return loginedUserMemberVo;
     }
 }
