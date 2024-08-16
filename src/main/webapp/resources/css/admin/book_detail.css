@@ -36,6 +36,8 @@ section {
 
 #section_wrap .book_detail ul li:nth-child(1) img {
 	max-width: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 #section_wrap .book_detail ul li:nth-child(2) {
@@ -45,6 +47,7 @@ section {
 #section_wrap .book_detail ul li:nth-child(2) table {
 	width: 100%;
 	border-collapse: collapse;
+	height: 379px;
 	}
 
 #section_wrap .book_detail ul li:nth-child(2) table tr td {
