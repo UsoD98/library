@@ -241,4 +241,63 @@ public class AdminMemberDao {
 
         return adminMemberVos.size() > 0 ? adminMemberVos.get(0) : null;
     }
+
+    // 관리자를 인증하는 selectAdmin 메서드를 오버로딩
+    public AdminMemberVo selectAdmin(String a_m_id, String a_m_name, String a_m_mail) {
+        log.info("==========[AdminMemberDao] HAS BEEN CALLED==========");
+        log.info("===================METHOD: selectAdmin()===================");
+
+        String sql = "SELECT * FROM tbl_admin_member "
+                + "WHERE a_m_id = ? AND a_m_name = ? AND a_m_mail = ?";
+
+        List<AdminMemberVo> adminMemberVos = new ArrayList<>();
+
+        try {
+            adminMemberVos = jdbcTemplate.query(sql, new RowMapper<AdminMemberVo>() {
+                @Override
+                public AdminMemberVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    AdminMemberVo adminMemberVo = new AdminMemberVo();
+
+                    adminMemberVo.setA_m_no(rs.getInt("a_m_no"));
+                    adminMemberVo.setA_m_approval(rs.getInt("a_m_approval"));
+                    adminMemberVo.setA_m_id(rs.getString("a_m_id"));
+                    adminMemberVo.setA_m_pw(rs.getString("a_m_pw"));
+                    adminMemberVo.setA_m_name(rs.getString("a_m_name"));
+                    adminMemberVo.setA_m_gender(rs.getString("a_m_gender"));
+                    adminMemberVo.setA_m_part(rs.getString("a_m_part"));
+                    adminMemberVo.setA_m_position(rs.getString("a_m_position"));
+                    adminMemberVo.setA_m_mail(rs.getString("a_m_mail"));
+                    adminMemberVo.setA_m_phone(rs.getString("a_m_phone"));
+                    adminMemberVo.setA_m_reg_date(rs.getString("a_m_reg_date"));
+                    adminMemberVo.setA_m_mod_date(rs.getString("a_m_mod_date"));
+
+                    return adminMemberVo;
+                }
+            }, a_m_id, a_m_name, a_m_mail);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return adminMemberVos.size() > 0 ? adminMemberVos.get(0) : null;
+    }
+
+    // 관리자 새 비밀번호 업데이트
+    public int updatePassword(String a_m_id, String newPassword) {
+        log.info("==========[AdminMemberDao] HAS BEEN CALLED==========");
+        log.info("===================METHOD: updatePassword()===================");
+
+        String sql = "UPDATE tbl_admin_member SET "
+                + "a_m_pw = ?, a_m_mod_date = NOW() "
+                + "WHERE a_m_id = ?";
+
+        int result = -1;
+
+        try {
+            result = jdbcTemplate.update(sql, passwordEncoder.encode(newPassword), a_m_id);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return result;
+    }
 }

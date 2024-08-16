@@ -150,7 +150,7 @@ public class AdminMemberController {
 
         int result = adminMemberService.modifyAccountConfirm(adminMemberVo);
 
-        if(result > 0) {
+        if (result > 0) {
             AdminMemberVo loginedAdminMemberVo = adminMemberService.getLoginedAdminMemberVo(adminMemberVo.getA_m_no());
 
             session.setAttribute("loginedAdminMemberVo", loginedAdminMemberVo);
@@ -159,6 +159,34 @@ public class AdminMemberController {
         } else {
             nextPage = "admin/member/modify_account_ng";
             log.info("=====ADMIN ACCOUNT MODIFICATION FAILED=====");
+        }
+
+        return nextPage;
+    }
+
+    // 관리자 비밀번호 찾기
+    @GetMapping("/findPasswordForm")
+    public String findPasswordForm() {
+        log.info("==========[AdminMemberController] HAS BEEN CALLED==========");
+        log.info("===================METHOD: findPasswordForm()===================");
+
+        String nextPage = "admin/member/find_password_form";
+
+        return nextPage;
+    }
+
+    // 관리자 비밀번호 찾기 확인
+    @PostMapping("/findPasswordConfirm")
+    public String findPasswordConfirm(AdminMemberVo adminMemberVo) {
+        log.info("==========[AdminMemberController] HAS BEEN CALLED==========");
+        log.info("===================METHOD: findPasswordConfirm()===================");
+
+        String nextPage = "admin/member/find_password_ok";
+
+        int result = adminMemberService.findPasswordConfirm(adminMemberVo);
+
+        if (result <= 0) {
+            nextPage = "admin/member/find_password_ng";
         }
 
         return nextPage;
