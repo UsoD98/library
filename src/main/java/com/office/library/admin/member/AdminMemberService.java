@@ -4,6 +4,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Log4j2
 @Service
 public class AdminMemberService {
@@ -47,5 +49,13 @@ public class AdminMemberService {
         }
 
         return loginedAdminMemberVo;
+    }
+
+    // 관리자 목록 요청
+    public List<AdminMemberVo> listupAdmin() {
+        log.info("==========[AdminMemberService] HAS BEEN CALLED==========");
+        log.info("===================METHOD: listupAdmin()===================");
+
+        return adminMemberDao.selectAdmins();
     }
 }

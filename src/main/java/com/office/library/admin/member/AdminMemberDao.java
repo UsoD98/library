@@ -102,7 +102,7 @@ public class AdminMemberDao {
                 }
             }, adminMemberVo.getA_m_id());
 
-            if(!passwordEncoder.matches(adminMemberVo.getA_m_pw(),
+            if (!passwordEncoder.matches(adminMemberVo.getA_m_pw(),
                     adminMemberVos.get(0).getA_m_pw()))
                 adminMemberVos.clear();
         } catch (Exception e) {
@@ -110,5 +110,43 @@ public class AdminMemberDao {
         }
 
         return adminMemberVos.size() > 0 ? adminMemberVos.get(0) : null;
+    }
+
+    // 관리자 목록 요청
+    public List<AdminMemberVo> selectAdmins() {
+        log.info("==========[AdminMemberDao] HAS BEEN CALLED==========");
+        log.info("===================METHOD: selectAdmins()===================");
+
+        String sql = "SELECT * FROM tbl_admin_member";
+
+        List<AdminMemberVo> adminMemberVos = new ArrayList<>();
+
+        try {
+            adminMemberVos = jdbcTemplate.query(sql, new RowMapper<AdminMemberVo>() {
+                @Override
+                public AdminMemberVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    AdminMemberVo adminMemberVo = new AdminMemberVo();
+
+                    adminMemberVo.setA_m_no(rs.getInt("a_m_no"));
+                    adminMemberVo.setA_m_approval(rs.getInt("a_m_approval"));
+                    adminMemberVo.setA_m_id(rs.getString("a_m_id"));
+                    adminMemberVo.setA_m_pw(rs.getString("a_m_pw"));
+                    adminMemberVo.setA_m_name(rs.getString("a_m_name"));
+                    adminMemberVo.setA_m_gender(rs.getString("a_m_gender"));
+                    adminMemberVo.setA_m_part(rs.getString("a_m_part"));
+                    adminMemberVo.setA_m_position(rs.getString("a_m_position"));
+                    adminMemberVo.setA_m_mail(rs.getString("a_m_mail"));
+                    adminMemberVo.setA_m_phone(rs.getString("a_m_phone"));
+                    adminMemberVo.setA_m_reg_date(rs.getString("a_m_reg_date"));
+                    adminMemberVo.setA_m_mod_date(rs.getString("a_m_mod_date"));
+
+                    return adminMemberVo;
+                }
+            });
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return adminMemberVos;
     }
 }
