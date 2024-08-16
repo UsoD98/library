@@ -47,4 +47,17 @@ public class UploadFileService {
             return null;
         }
     }
+
+    // 파일 삭제
+    public boolean delete(String fileName) {
+        boolean result = false;
+
+        File deleteFile = new File(uploadDir + "/" + fileName);
+
+        if (deleteFile.exists()) {
+            result = deleteFile.delete();
+        }
+
+        return result;
+    }
 }

@@ -111,6 +111,10 @@ public class BookController {
             // 파일 저장
             String savedFileName = uploadFileService.upload(file);
             if (savedFileName != null) {
+                // 기존 파일 삭제
+                String originalFileName = bookService.bookDetail(bookVo.getB_no()).getB_thumbnail();
+                uploadFileService.delete(originalFileName);
+
                 bookVo.setB_thumbnail(savedFileName);
             }
         }
