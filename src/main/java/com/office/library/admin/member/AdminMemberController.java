@@ -122,4 +122,45 @@ public class AdminMemberController {
 
         return nextPage;
     }
+
+    // 관리자 회원 정보 수정
+    @GetMapping("/modifyAccountForm")
+    public String modifyAccountForm(HttpSession session) {
+        log.info("==========[AdminMemberController] HAS BEEN CALLED==========");
+        log.info("===================METHOD: modifyAccountForm()===================");
+
+        String nextPage = "admin/member/modify_account_form";
+
+        AdminMemberVo loginedAdminMemberVo = (AdminMemberVo) session.getAttribute("loginedAdminMemberVo");
+
+        if (loginedAdminMemberVo == null) {
+            nextPage = "redirect:/admin/member/loginForm";
+        }
+
+        return nextPage;
+    }
+
+    // 관리자 회원 정보 수정 확인
+    @PostMapping("/modifyAccountConfirm")
+    public String modifyAccountConfirm(AdminMemberVo adminMemberVo, HttpSession session) {
+        log.info("==========[AdminMemberController] HAS BEEN CALLED==========");
+        log.info("===================METHOD: modifyAccountConfirm()===================");
+
+        String nextPage = "admin/member/modify_account_ok";
+
+        int result = adminMemberService.modifyAccountConfirm(adminMemberVo);
+
+        if(result > 0) {
+            AdminMemberVo loginedAdminMemberVo = adminMemberService.getLoginedAdminMemberVo(adminMemberVo.getA_m_no());
+
+            session.setAttribute("loginedAdminMemberVo", loginedAdminMemberVo);
+            session.setMaxInactiveInterval(60 * 30);
+            log.info("=====ADMIN ACCOUNT MODIFICATION SUCCESSFUL=====");
+        } else {
+            nextPage = "admin/member/modify_account_ng";
+            log.info("=====ADMIN ACCOUNT MODIFICATION FAILED=====");
+        }
+
+        return nextPage;
+    }
 }

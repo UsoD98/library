@@ -66,4 +66,19 @@ public class AdminMemberService {
 
         int result = adminMemberDao.updateAdminAccount(a_m_no);
     }
+
+    // 관리자 정보 수정 확인
+    public int modifyAccountConfirm(AdminMemberVo adminMemberVo) {
+        log.info("==========[AdminMemberService] HAS BEEN CALLED==========");
+        log.info("===================METHOD: modifyAccountConfirm()===================");
+
+        return adminMemberDao.updateAdminAccount(adminMemberVo);
+    }
+
+    public AdminMemberVo getLoginedAdminMemberVo(int a_m_no) {
+        log.info("==========[AdminMemberService] HAS BEEN CALLED==========");
+        log.info("===================METHOD: getloginedAdminMemberVo()===================");
+
+        return adminMemberDao.selectAdmin(a_m_no);
+    }
 }
