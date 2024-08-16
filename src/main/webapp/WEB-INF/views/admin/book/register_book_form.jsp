@@ -40,7 +40,7 @@
 					<input type="text" name="b_publish_year" placeholder="INPUT BOOK PUBLISH YEAR."> <br>
 					<input type="text" name="b_isbn" placeholder="INPUT BOOK ISBN."> <br>
 					<input type="text" name="b_call_number" placeholder="INPUT BOOK CALL NUMBER."> <br>
-					<select name="b_rantal_able">
+					<select name="b_rental_able">
 						<option value="">SELECT BOOK RANTAL ABLE.</option>
 						<option value="0">UNABLE.</option>
 						<option value="1">ABLE.</option>
