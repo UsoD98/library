@@ -107,18 +107,34 @@ public class BookController {
 
         String nextPage = "admin/book/modify_book_ok";
 
-        if(!file.getOriginalFilename().equals("")) {
+        if (!file.getOriginalFilename().equals("")) {
             // 파일 저장
             String savedFileName = uploadFileService.upload(file);
-            if(savedFileName != null) {
+            if (savedFileName != null) {
                 bookVo.setB_thumbnail(savedFileName);
             }
         }
 
         int result = bookService.modifyBookConfirm(bookVo);
 
-        if(result <= 0) {
+        if (result <= 0) {
             nextPage = "admin/book/modify_book_ng";
+        }
+
+        return nextPage;
+    }
+
+    // 도서 삭제 확인
+    @GetMapping("/deleteBookConfirm")
+    public String deleteBookConfirm(@RequestParam("b_no") int b_no) {
+        log.info("[BookController] deleteBookConfirm HAS BEEN CALLED");
+
+        String nextPage = "admin/book/delete_book_ok";
+
+        int result = bookService.deleteBookConfirm(b_no);
+
+        if (result <= 0) {
+            nextPage = "admin/book/delete_book_ng";
         }
 
         return nextPage;

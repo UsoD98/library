@@ -179,4 +179,22 @@ public class BookDao {
 
         return result;
     }
+
+    // 도서 삭제
+    public int deleteBook(int b_no) {
+        log.info("[BookDao] deleteBook HAS BEEN CALLED");
+
+        String sql = "DELETE FROM tbl_book "
+                + "WHERE b_no = ?";
+
+        int result = -1;
+
+        try {
+            result = jdbcTemplate.update(sql, b_no);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+
+        return result;
+    }
 }

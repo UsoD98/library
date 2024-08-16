@@ -63,4 +63,11 @@ public class BookService {
 
         return bookDao.updateBook(bookVo);
     }
+
+    // 도서 삭제
+    public int deleteBookConfirm(int b_no) {
+        log.info("[BookService] deleteBookConfirm HAS BEEN CALLED");
+
+        return bookDao.deleteBook(b_no);
+    }
 }
