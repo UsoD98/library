@@ -46,3 +46,6 @@ build/
 
 ### secret.properties ###
 /src/main/resources/secret.properties
+
+### Image Upload ###
+/upload/
