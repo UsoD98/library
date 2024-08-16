@@ -149,4 +149,24 @@ public class AdminMemberDao {
 
         return adminMemberVos;
     }
+
+    // 관리자 승인(a_m_approval 값 0에서 1로 변경)
+    public int updateAdminAccount(int a_m_no) {
+        log.info("==========[AdminMemberDao] HAS BEEN CALLED==========");
+        log.info("===================METHOD: updateAdminAccount()===================");
+
+        String sql = "UPDATE tbl_admin_member SET "
+                + "a_m_approval = 1 "
+                + "WHERE a_m_no = ?";
+
+        int result = -1;
+
+        try {
+            result = jdbcTemplate.update(sql, a_m_no);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return result;
+    }
 }

@@ -42,7 +42,7 @@ public class AdminMemberService {
 
         AdminMemberVo loginedAdminMemberVo = adminMemberDao.selectAdmin(adminMemberVo);
 
-        if(loginedAdminMemberVo != null) {
+        if (loginedAdminMemberVo != null) {
             log.info("=====ADMIN LOGIN SUCCESS=====");
         } else {
             log.info("=====ADMIN LOGIN FAILED=====");
@@ -57,5 +57,13 @@ public class AdminMemberService {
         log.info("===================METHOD: listupAdmin()===================");
 
         return adminMemberDao.selectAdmins();
+    }
+
+    // 관리자 승인
+    public void setAdminApproval(int a_m_no) {
+        log.info("==========[AdminMemberService] HAS BEEN CALLED==========");
+        log.info("===================METHOD: setAdminApproval()===================");
+
+        int result = adminMemberDao.updateAdminAccount(a_m_no);
     }
 }

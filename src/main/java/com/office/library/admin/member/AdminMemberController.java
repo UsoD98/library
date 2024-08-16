@@ -4,10 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -108,6 +105,20 @@ public class AdminMemberController {
         List<AdminMemberVo> adminMemberVos = adminMemberService.listupAdmin();
 
         model.addAttribute("adminMemberVos", adminMemberVos);
+
+        return nextPage;
+    }
+
+    // 관리자 승인
+    @GetMapping("/setAdminApproval")
+    public String setAdminApproval(@RequestParam("a_m_no") int a_m_no) {
+        log.info("==========[AdminMemberController] HAS BEEN CALLED==========");
+        log.info("===================METHOD: setAdminApproval()===================");
+
+        String nextPage = "redirect:/admin/member/listupAdmin";
+
+        adminMemberService.setAdminApproval(a_m_no);
+        log.info("관리자 승인이 완료되었습니다 : " + a_m_no);
 
         return nextPage;
     }
