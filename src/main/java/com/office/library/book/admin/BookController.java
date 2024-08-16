@@ -85,4 +85,42 @@ public class BookController {
 
         return nextPage;
     }
+
+    // 도서 수정
+    @GetMapping("/modifyBookForm")
+    public String modifyBookForm(@RequestParam("b_no") int b_no, Model model) {
+        log.info("[BookController] modifyBookForm HAS BEEN CALLED");
+
+        String nextPage = "admin/book/modify_book_form";
+
+        BookVo bookVo = bookService.modifyBookForm(b_no);
+
+        model.addAttribute("bookVo", bookVo);
+
+        return nextPage;
+    }
+
+    // 도서 수정 확인
+    @PostMapping("/modifyBookConfirm")
+    public String modifyBookConfirm(BookVo bookVo, @RequestParam("file") MultipartFile file) {
+        log.info("[BookController] modifyBookConfirm HAS BEEN CALLED");
+
+        String nextPage = "admin/book/modify_book_ok";
+
+        if(!file.getOriginalFilename().equals("")) {
+            // 파일 저장
+            String savedFileName = uploadFileService.upload(file);
+            if(savedFileName != null) {
+                bookVo.setB_thumbnail(savedFileName);
+            }
+        }
+
+        int result = bookService.modifyBookConfirm(bookVo);
+
+        if(result <= 0) {
+            nextPage = "admin/book/modify_book_ng";
+        }
+
+        return nextPage;
+    }
 }

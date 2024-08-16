@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -128,5 +129,54 @@ public class BookDao {
         }
 
         return bookVos.size() > 0 ? bookVos.get(0) : null;
+    }
+
+    // 도서 수정
+    public int updateBook(BookVo bookVo) {
+        log.info("[BookDao] updateBook HAS BEEN CALLED");
+
+        List<String> args = new ArrayList<>();
+
+        String sql = "UPDATE tbl_book SET ";
+        if (bookVo.getB_thumbnail() != null) {
+            sql += "b_thumbnail = ?, ";
+            args.add(bookVo.getB_thumbnail());
+        }
+
+        sql += "b_name = ?, ";
+        args.add(bookVo.getB_name());
+
+        sql += "b_author = ?, ";
+        args.add(bookVo.getB_author());
+
+        sql += "b_publisher = ?, ";
+        args.add(bookVo.getB_publisher());
+
+        sql += "b_publish_year = ?, ";
+        args.add(bookVo.getB_publish_year());
+
+        sql += "b_isbn = ?, ";
+        args.add(bookVo.getB_isbn());
+
+        sql += "b_call_number = ?, ";
+        args.add(bookVo.getB_call_number());
+
+        sql += "b_rental_able = ?, ";
+        args.add(Integer.toString(bookVo.getB_rental_able()));
+
+        sql += "b_mod_date = NOW() ";
+
+        sql += "WHERE b_no = ?";
+        args.add(Integer.toString(bookVo.getB_no()));
+
+        int result = -1;
+
+        try {
+            result = jdbcTemplate.update(sql, args.toArray());
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+
+        return result;
     }
 }

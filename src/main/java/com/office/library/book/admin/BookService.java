@@ -49,4 +49,18 @@ public class BookService {
 
         return bookDao.selectBook(b_no);
     }
+
+    // 도서 검색 결과 데이터를 수정 폼에 전달
+    public BookVo modifyBookForm(int b_no) {
+        log.info("[BookService] modifyBookForm HAS BEEN CALLED");
+
+        return bookDao.selectBook(b_no);
+    }
+
+    // 도서 수정
+    public int modifyBookConfirm(BookVo bookVo) {
+        log.info("[BookService] modifyBookConfirm HAS BEEN CALLED");
+
+        return bookDao.updateBook(bookVo);
+    }
 }
