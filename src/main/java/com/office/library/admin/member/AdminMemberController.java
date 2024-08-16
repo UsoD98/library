@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
+
 @Log4j2
 @Controller
 @RequestMapping("/admin/member")
@@ -59,7 +61,7 @@ public class AdminMemberController {
 
     // 로그인 확인
     @PostMapping("loginConfirm")
-    public String loginConfirm(AdminMemberVo adminMemberVo) {
+    public String loginConfirm(AdminMemberVo adminMemberVo, HttpSession session) {
         log.info("==========[AdminMemberController] HAS BEEN CALLED==========");
         log.info("===================METHOD: loginConfirm()===================");
 
@@ -67,11 +69,13 @@ public class AdminMemberController {
 
         AdminMemberVo loginedAdminMemberVo = adminMemberService.loginConfirm(adminMemberVo);
 
-        if(loginedAdminMemberVo == null) {
+        if (loginedAdminMemberVo == null) {
             nextPage = "admin/member/login_ng";
             log.info("=====ADMIN LOGIN FAILED=====");
         } else {
             log.info("=====ADMIN LOGIN SUCCESSFUL=====");
+            session.setAttribute("loginedAdminMemberVo", loginedAdminMemberVo);
+            session.setMaxInactiveInterval(60 * 30);
         }
 
         return nextPage;
