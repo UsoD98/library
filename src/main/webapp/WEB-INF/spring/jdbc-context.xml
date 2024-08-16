@@ -3,9 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- Load properties from db.properties -->
+    <!-- Load properties from secret.properties -->
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-        <property name="location" value="classpath:db.properties"/>
+        <property name="location" value="classpath:secret.properties"/>
     </bean>
 
     <!-- MySQL connection 객체 -->
