@@ -71,4 +71,18 @@ public class BookController {
 
         return nextPage;
     }
+
+    // 도서 상세 조회
+    @GetMapping("/bookDetail")
+    public String bookDetail(@RequestParam("b_no") int b_no, Model model) {
+        log.info("[BookController] bookDetail HAS BEEN CALLED");
+
+        String nextPage = "admin/book/book_detail";
+
+        BookVo bookVo = bookService.bookDetail(b_no);
+
+        model.addAttribute("bookVo", bookVo);
+
+        return nextPage;
+    }
 }

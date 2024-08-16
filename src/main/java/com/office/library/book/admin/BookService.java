@@ -42,4 +42,11 @@ public class BookService {
 
         return bookDao.selectBooksBySearch(bookVo);
     }
+
+    // 도서 상세 조회
+    public BookVo bookDetail(int b_no) {
+        log.info("[BookService] bookDetail HAS BEEN CALLED");
+
+        return bookDao.selectBook(b_no);
+    }
 }
