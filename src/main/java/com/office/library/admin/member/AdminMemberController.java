@@ -80,4 +80,18 @@ public class AdminMemberController {
 
         return nextPage;
     }
+
+    // 로그아웃 확인
+    @GetMapping("/logoutConfirm")
+    public String logoutConfirm(HttpSession session) {
+        log.info("==========[AdminMemberController] HAS BEEN CALLED==========");
+        log.info("===================METHOD: logoutConfirm()===================");
+
+        String nextPage = "redirect:/admin";
+
+        session.invalidate();
+        log.info("=====ADMIN LOGOUT SUCCESSFUL=====");
+
+        return nextPage;
+    }
 }
