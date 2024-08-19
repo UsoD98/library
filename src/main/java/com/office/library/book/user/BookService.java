@@ -14,9 +14,17 @@ public class BookService {
     @Autowired
     BookDao bookDao;
 
+    // 도서 검색
     public List<BookVo> searchBookConfirm(BookVo bookVo) {
         log.info("[BookService] searchBookConfirm HAS BEEN CALLED");
 
         return bookDao.selectBooksBySearch(bookVo);
+    }
+
+    // 도서 상세
+    public BookVo bookDetail(int b_no) {
+        log.info("[BookService] bookDetail HAS BEEN CALLED");
+
+        return bookDao.selectBook(b_no);
     }
 }
