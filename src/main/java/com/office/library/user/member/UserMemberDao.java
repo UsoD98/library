@@ -164,4 +164,59 @@ public class UserMemberDao {
 
         return userMemberVos.size() > 0 ? userMemberVos.get(0) : null;
     }
+
+    // 사용자가 입력한 정보(아이디, 이름, 메일주소)와 일치하는 회원 조회
+    public UserMemberVo selectUser(String u_m_id, String u_m_name, String u_m_mail) {
+        log.info("[UserMemberDao] selectUser HAS BEEN CALLED");
+
+        String sql = "SELECT *FROM tbl_user_member "
+                + "WHERE u_m_id = ? AND u_m_name = ? AND u_m_mail = ?";
+
+        List<UserMemberVo> userMemberVos = new ArrayList<>();
+
+        try {
+            userMemberVos = jdbcTemplate.query(sql, new RowMapper<UserMemberVo>() {
+                @Override
+                public UserMemberVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+                    UserMemberVo userMemberVo = new UserMemberVo();
+
+                    userMemberVo.setU_m_no(rs.getInt("u_m_no"));
+                    userMemberVo.setU_m_id(rs.getString("u_m_id"));
+                    userMemberVo.setU_m_pw(rs.getString("u_m_pw"));
+                    userMemberVo.setU_m_name(rs.getString("u_m_name"));
+                    userMemberVo.setU_m_gender(rs.getString("u_m_gender"));
+                    userMemberVo.setU_m_mail(rs.getString("u_m_mail"));
+                    userMemberVo.setU_m_phone(rs.getString("u_m_phone"));
+                    userMemberVo.setU_m_reg_date(rs.getString("u_m_reg_date"));
+                    userMemberVo.setU_m_mod_date(rs.getString("u_m_mod_date"));
+
+                    return userMemberVo;
+                }
+            }, u_m_id, u_m_name, u_m_mail);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return userMemberVos.size() > 0 ? userMemberVos.get(0) : null;
+    }
+
+    // 발급받은 비밀번호로 회원의 비밀번호 변경
+    public int updatePassword(String u_m_id, String newPassword) {
+        log.info("[UserMemberDao] updatePassword HAS BEEN CALLED");
+
+        String sql = "UPDATE tbl_user_member SET "
+                + "u_m_pw = ?, u_m_mod_date = NOW() "
+                + "WHERE u_m_id = ?";
+
+        int result = -1;
+
+        try {
+            result = jdbcTemplate.update(sql, passwordEncoder.encode(newPassword), u_m_id);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return result;
+    }
 }

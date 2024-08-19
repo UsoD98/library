@@ -124,4 +124,30 @@ public class UserMemberController {
 
         return nextPage;
     }
+
+    // 비밀번호 찾기
+    @GetMapping("findPasswordForm")
+    public String findPasswordForm() {
+        log.info("[UserMemberController] findPasswordForm HAS BEEN CALLED");
+
+        String nextPage = "user/member/find_password_form";
+
+        return nextPage;
+    }
+
+    // 비밀번호 찾기 확인
+    @PostMapping("findPasswordConfirm")
+    public String findPasswordConfirm(UserMemberVo userMemberVo) {
+        log.info("[UserMemberController] findPasswordConfirm HAS BEEN CALLED");
+
+        String nextPage = "user/member/find_password_ok";
+
+        int result = userMemberService.findPasswordConfirm(userMemberVo);
+
+        if (result <= 0) {
+            nextPage = "user/member/find_password_ng";
+        }
+
+        return nextPage;
+    }
 }
