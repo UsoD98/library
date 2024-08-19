@@ -59,7 +59,7 @@ select * from tbl_rental_book;
 
 # 희망 도서 요청 테이블
 CREATE TABLE tbl_hope_book(
-    bh_no INT PRIMARY KEY AUTO_INCREMENT,
+    hb_no INT PRIMARY KEY AUTO_INCREMENT,
     u_m_no INT,
     hb_name VARCHAR(30) NOT NULL,
     hb_author VARCHAR(20) NOT NULL,
