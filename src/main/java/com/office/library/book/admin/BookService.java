@@ -1,6 +1,7 @@
 package com.office.library.book.admin;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.HopeBookVo;
 import com.office.library.book.RentalBookVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +93,33 @@ public class BookService {
         }
 
         return result;
+    }
+
+    // 희망 도서 목록
+    public List<HopeBookVo> getHopeBooks() {
+        log.info("[BookService] getHopeBooks HAS BEEN CALLED");
+
+        return bookDao.selectHopeBooks();
+    }
+
+    // 희망 도서등록(입고)
+    public int registerHopeBookConfirm(BookVo bookVo, int hb_no) {
+        log.info("[BookService] registerHopeBookConfirm HAS BEEN CALLED");
+
+        boolean isISBN = bookDao.isISBN(bookVo.getB_isbn());
+
+        if (!isISBN) {
+            int result = bookDao.insertBook(bookVo);
+
+            if (result > 0) {
+                bookDao.updateHopeBookResult(hb_no);
+
+                return BOOK_REGISTER_SUCCESS;
+            } else {
+                return BOOK_REGISTER_FAIL;
+            }
+        } else {
+            return BOOK_ISBN_ALREADY_EXIST;
+        }
     }
 }

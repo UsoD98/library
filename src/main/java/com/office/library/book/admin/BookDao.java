@@ -1,6 +1,7 @@
 package com.office.library.book.admin;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.HopeBookVo;
 import com.office.library.book.RentalBookVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -297,5 +298,68 @@ public class BookDao {
         }
 
         return result;
+    }
+
+    // 희망 도서 조회
+    public List<HopeBookVo> selectHopeBooks() {
+        log.info("[BookDao] selectHopeBooks HAS BEEN CALLED");
+
+        String sql = "SELECT * FROM tbl_hope_book hb "
+                + "JOIN tbl_user_member um "
+                + "ON hb.u_m_no = um.u_m_no "
+                + "ORDER BY hb.hb_no DESC";
+
+        List<HopeBookVo> hopeBookVos = new ArrayList<>();
+
+        try {
+            hopeBookVos = jdbcTemplate.query(sql, new RowMapper<HopeBookVo>() {
+                @Override
+                public HopeBookVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+                    HopeBookVo hopeBookVo = new HopeBookVo();
+
+                    hopeBookVo.setHb_no(rs.getInt("hb_no"));
+                    hopeBookVo.setHb_name(rs.getString("hb_name"));
+                    hopeBookVo.setHb_author(rs.getString("hb_author"));
+                    hopeBookVo.setHb_publisher(rs.getString("hb_publisher"));
+                    hopeBookVo.setHb_publish_year(rs.getString("hb_publish_year"));
+                    hopeBookVo.setHb_reg_date(rs.getString("hb_reg_date"));
+                    hopeBookVo.setHb_mod_date(rs.getString("hb_mod_date"));
+                    hopeBookVo.setHb_result(rs.getInt("hb_result"));
+                    hopeBookVo.setHb_result_last_date(rs.getString("hb_result_last_date"));
+
+                    hopeBookVo.setU_m_no(rs.getInt("u_m_no"));
+                    hopeBookVo.setU_m_id(rs.getString("u_m_id"));
+                    hopeBookVo.setU_m_pw(rs.getString("u_m_pw"));
+                    hopeBookVo.setU_m_name(rs.getString("u_m_name"));
+                    hopeBookVo.setU_m_gender(rs.getString("u_m_gender"));
+                    hopeBookVo.setU_m_mail(rs.getString("u_m_mail"));
+                    hopeBookVo.setU_m_phone(rs.getString("u_m_phone"));
+                    hopeBookVo.setU_m_reg_date(rs.getString("u_m_reg_date"));
+                    hopeBookVo.setU_m_mod_date(rs.getString("u_m_mod_date"));
+
+                    return hopeBookVo;
+                }
+            });
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return hopeBookVos;
+    }
+
+    // 희망 도서 업데이트
+    public void updateHopeBookResult(int hb_no) {
+        log.info("[BookDao] updateHopeBookResult HAS BEEN CALLED");
+
+        String sql = "UPDATE tbl_hope_book "
+                + "SET hb_result = 1, hb_result_last_date = NOW() "
+                + "WHERE hb_no = ?";
+
+        try {
+            jdbcTemplate.update(sql, hb_no);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
     }
 }
