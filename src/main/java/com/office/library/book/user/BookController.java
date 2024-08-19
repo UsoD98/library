@@ -1,6 +1,7 @@
 package com.office.library.book.user;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.HopeBookVo;
 import com.office.library.book.RentalBookVo;
 import com.office.library.user.member.UserMemberVo;
 import lombok.extern.log4j.Log4j2;
@@ -101,6 +102,35 @@ public class BookController {
         List<RentalBookVo> rentalBookVos = bookService.listupRentalBookHistory(loginedUserMemberVo.getU_m_no());
 
         model.addAttribute("rentalBookVos", rentalBookVos);
+
+        return nextPage;
+    }
+
+    // 희망 도서 요청(인터셉트 필요)
+    @GetMapping("/requestHopeBookForm")
+    public String requestHopeBookForm() {
+        log.info("[BookController] requestHopeBookForm HAS BEEN CALLED");
+
+        String nextPage = "user/book/request_hope_book_form";
+
+        return nextPage;
+    }
+
+    // 희망 도서 요청 확인(인터셉트 필요)
+    @GetMapping("/requestHopeBookConfirm")
+    public String requestHopeBookConfirm(HopeBookVo hopeBookVo, HttpSession session) {
+        log.info("[BookController] requestHopeBookConfirm HAS BEEN CALLED");
+
+        String nextPage = "user/book/request_hope_book_ok";
+
+        UserMemberVo loginedUserMemberVo = (UserMemberVo) session.getAttribute("loginedUserMemberVo");
+        hopeBookVo.setU_m_no(loginedUserMemberVo.getU_m_no());
+
+        int result = bookService.requestHopeBookConfirm(hopeBookVo);
+
+        if(result <= 0) {
+            nextPage = "user.book/request_hope_book_ng";
+        }
 
         return nextPage;
     }

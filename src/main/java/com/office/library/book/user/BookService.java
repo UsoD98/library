@@ -1,6 +1,7 @@
 package com.office.library.book.user;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.HopeBookVo;
 import com.office.library.book.RentalBookVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,12 @@ public class BookService {
         log.info("[BookService] listupRentalBookHistory HAS BEEN CALLED");
 
         return bookDao.selectRentalBookHistory(u_m_no);
+    }
+
+    // 희망 도서 요청 확인
+    public int requestHopeBookConfirm(HopeBookVo hopeBookVo) {
+        log.info("[BookService] requestHopeBookConfirm HAS BEEN CALLED");
+
+        return bookDao.insertHopeBook(hopeBookVo);
     }
 }

@@ -1,6 +1,7 @@
 package com.office.library.book.user;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.HopeBookVo;
 import com.office.library.book.RentalBookVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -239,5 +240,30 @@ public class BookDao {
         }
 
         return rentalBookVos;
+    }
+
+    // 희망 도서 추가
+    public int insertHopeBook(HopeBookVo hopeBookVo) {
+        log.info("[BookDao] insertHopeBook HAS BEEN CALLED");
+
+        String sql = "INSERT INTO tbl_hope_book(u_m_no, hb_name, hb_author, hb_publisher, "
+                + "hb_publish_year, hb_reg_date, hb_mod_date, hb_result_last_date) "
+                + "VALUES(?, ?, ?, ?, ?, NOW(), NOW(), NOW())";
+
+        int result = -1;
+
+        try {
+            result = jdbcTemplate.update(sql
+                    , hopeBookVo.getU_m_no()
+                    , hopeBookVo.getHb_name()
+                    , hopeBookVo.getHb_author()
+                    , hopeBookVo.getHb_publisher()
+                    , hopeBookVo.getHb_publish_year());
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return result;
     }
 }
