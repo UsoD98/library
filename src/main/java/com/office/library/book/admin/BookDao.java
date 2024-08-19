@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
-@Component
+@Component("admin.BookDao")
 public class BookDao {
 
     @Autowired

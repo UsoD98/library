@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Log4j2
-@Controller
+@Controller("admin.BookController")
 @RequestMapping("/book/admin")
 public class BookController {
 

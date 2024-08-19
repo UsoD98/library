@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Log4j2
-@Service
+@Service("admin.BookService")
 public class BookService {
 
     final static public int BOOK_ISBN_ALREADY_EXIST = 0;
