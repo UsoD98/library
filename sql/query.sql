@@ -50,7 +50,7 @@ CREATE TABLE tbl_rental_book(
     b_no INT,
     u_m_no INT,
     rb_start_date DATETIME,
-    rb_end_date DATETIME,
+    rb_end_date DATETIME DEFAULT '1000-01-01',
     rb_reg_date DATETIME,
     rb_mod_date DATETIME
 );
