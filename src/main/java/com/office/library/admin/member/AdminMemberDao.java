@@ -103,27 +103,8 @@ public class AdminMemberDao {
         List<AdminMemberVo> adminMemberVos = new ArrayList<>();
 
         try {
-            adminMemberVos = jdbcTemplate.query(sql, new RowMapper<AdminMemberVo>() {
-                @Override
-                public AdminMemberVo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    AdminMemberVo adminMemberVo = new AdminMemberVo();
-
-                    adminMemberVo.setA_m_no(rs.getInt("a_m_no"));
-                    adminMemberVo.setA_m_approval(rs.getInt("a_m_approval"));
-                    adminMemberVo.setA_m_id(rs.getString("a_m_id"));
-                    adminMemberVo.setA_m_pw(rs.getString("a_m_pw"));
-                    adminMemberVo.setA_m_name(rs.getString("a_m_name"));
-                    adminMemberVo.setA_m_gender(rs.getString("a_m_gender"));
-                    adminMemberVo.setA_m_part(rs.getString("a_m_part"));
-                    adminMemberVo.setA_m_position(rs.getString("a_m_position"));
-                    adminMemberVo.setA_m_mail(rs.getString("a_m_mail"));
-                    adminMemberVo.setA_m_phone(rs.getString("a_m_phone"));
-                    adminMemberVo.setA_m_reg_date(rs.getString("a_m_reg_date"));
-                    adminMemberVo.setA_m_mod_date(rs.getString("a_m_mod_date"));
-
-                    return adminMemberVo;
-                }
-            });
+            RowMapper<AdminMemberVo> rowMapper = BeanPropertyRowMapper.newInstance(AdminMemberVo.class);
+            adminMemberVos = jdbcTemplate.query(sql, rowMapper);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -194,28 +175,8 @@ public class AdminMemberDao {
         List<AdminMemberVo> adminMemberVos = new ArrayList<>();
 
         try {
-            adminMemberVos = jdbcTemplate.query(sql, new RowMapper<AdminMemberVo>() {
-                @Override
-                public AdminMemberVo mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-                    AdminMemberVo adminMemberVo = new AdminMemberVo();
-
-                    adminMemberVo.setA_m_no(rs.getInt("a_m_no"));
-                    adminMemberVo.setA_m_approval(rs.getInt("a_m_approval"));
-                    adminMemberVo.setA_m_id(rs.getString("a_m_id"));
-                    adminMemberVo.setA_m_pw(rs.getString("a_m_pw"));
-                    adminMemberVo.setA_m_name(rs.getString("a_m_name"));
-                    adminMemberVo.setA_m_gender(rs.getString("a_m_gender"));
-                    adminMemberVo.setA_m_part(rs.getString("a_m_part"));
-                    adminMemberVo.setA_m_position(rs.getString("a_m_position"));
-                    adminMemberVo.setA_m_mail(rs.getString("a_m_mail"));
-                    adminMemberVo.setA_m_phone(rs.getString("a_m_phone"));
-                    adminMemberVo.setA_m_reg_date(rs.getString("a_m_reg_date"));
-                    adminMemberVo.setA_m_mod_date(rs.getString("a_m_mod_date"));
-
-                    return adminMemberVo;
-                }
-            }, a_m_no);
+            RowMapper<AdminMemberVo> rowMapper = BeanPropertyRowMapper.newInstance(AdminMemberVo.class);
+            adminMemberVos = jdbcTemplate.query(sql, rowMapper, a_m_no);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -234,27 +195,8 @@ public class AdminMemberDao {
         List<AdminMemberVo> adminMemberVos = new ArrayList<>();
 
         try {
-            adminMemberVos = jdbcTemplate.query(sql, new RowMapper<AdminMemberVo>() {
-                @Override
-                public AdminMemberVo mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    AdminMemberVo adminMemberVo = new AdminMemberVo();
-
-                    adminMemberVo.setA_m_no(rs.getInt("a_m_no"));
-                    adminMemberVo.setA_m_approval(rs.getInt("a_m_approval"));
-                    adminMemberVo.setA_m_id(rs.getString("a_m_id"));
-                    adminMemberVo.setA_m_pw(rs.getString("a_m_pw"));
-                    adminMemberVo.setA_m_name(rs.getString("a_m_name"));
-                    adminMemberVo.setA_m_gender(rs.getString("a_m_gender"));
-                    adminMemberVo.setA_m_part(rs.getString("a_m_part"));
-                    adminMemberVo.setA_m_position(rs.getString("a_m_position"));
-                    adminMemberVo.setA_m_mail(rs.getString("a_m_mail"));
-                    adminMemberVo.setA_m_phone(rs.getString("a_m_phone"));
-                    adminMemberVo.setA_m_reg_date(rs.getString("a_m_reg_date"));
-                    adminMemberVo.setA_m_mod_date(rs.getString("a_m_mod_date"));
-
-                    return adminMemberVo;
-                }
-            }, a_m_id, a_m_name, a_m_mail);
+            RowMapper<AdminMemberVo> rowMapper = new BeanPropertyRowMapper<>(AdminMemberVo.class);
+            adminMemberVos = jdbcTemplate.query(sql, rowMapper, a_m_id, a_m_name, a_m_mail);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
