@@ -44,3 +44,15 @@ CREATE TABLE tbl_user_member(
 );
 
 select * from tbl_user_member;
+
+CREATE TABLE tbl_rental_book(
+    rb_no INT PRIMARY KEY AUTO_INCREMENT,
+    b_no INT,
+    u_m_no INT,
+    rb_start_date DATETIME,
+    rb_end_date DATETIME,
+    rb_reg_date DATETIME,
+    rb_mod_date DATETIME
+);
+
+select * from tbl_rental_book;
