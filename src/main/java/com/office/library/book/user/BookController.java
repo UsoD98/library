@@ -58,9 +58,10 @@ public class BookController {
 
         UserMemberVo loginedUserMemberVo = (UserMemberVo) session.getAttribute("loginedUserMemberVo");
 
-        if (loginedUserMemberVo == null) {
-            return "redirect:/user/member/loginForm";
-        }
+//        인터셉터로 대체하여 더 이상 컨트롤러에서 로그인 여부를 확인하지 않음
+//        if (loginedUserMemberVo == null) {
+//            return "redirect:/user/member/loginForm";
+//        }
 
         int result = bookService.rentalBookConfirm(b_no, loginedUserMemberVo.getU_m_no());
 

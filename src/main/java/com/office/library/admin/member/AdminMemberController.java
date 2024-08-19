@@ -131,11 +131,12 @@ public class AdminMemberController {
 
         String nextPage = "admin/member/modify_account_form";
 
-        AdminMemberVo loginedAdminMemberVo = (AdminMemberVo) session.getAttribute("loginedAdminMemberVo");
-
-        if (loginedAdminMemberVo == null) {
-            nextPage = "redirect:/admin/member/loginForm";
-        }
+//        인터셉터로 대체
+//        AdminMemberVo loginedAdminMemberVo = (AdminMemberVo) session.getAttribute("loginedAdminMemberVo");
+//
+//        if (loginedAdminMemberVo == null) {
+//            nextPage = "redirect:/admin/member/loginForm";
+//        }
 
         return nextPage;
     }

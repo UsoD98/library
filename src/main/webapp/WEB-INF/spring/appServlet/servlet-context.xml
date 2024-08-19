@@ -30,5 +30,21 @@
 
     <context:component-scan base-package="com.office.library"/>
 
+    <interceptors>
+        <interceptor>
+            <mapping path="/book/user/rentalBookConfirm"/>
+            <mapping path="/user/member/modifyAccountForm"/>
+            <mapping path="/user/member/modifyAccountConfirm"/>
+            <beans:bean
+                    class="com.office.library.user.member.UserMemberLoginInterceptor"/>
+        </interceptor>
+
+        <interceptor>
+            <mapping path="/admin/member/modifyAccountForm"/>
+            <mapping path="/admin/member/modifyAccountConfirm"/>
+            <beans:bean
+                    class="com.office.library.admin.member.AdminMemberLoginInterceptor"/>
+        </interceptor>
+    </interceptors>
 
 </beans:beans>
