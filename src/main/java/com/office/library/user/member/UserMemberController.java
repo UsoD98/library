@@ -84,4 +84,44 @@ public class UserMemberController {
 
         return nextPage;
     }
+
+    // 회원정보 수정
+    @GetMapping("/modifyAccountForm")
+    public String modifyAccountForm(HttpSession session) {
+        log.info("[UserMemberController] modifyAccountForm HAS BEEN CALLED");
+
+        String nextPage = "user/member/modify_account_form";
+
+        UserMemberVo loginedUserMemberVo = (UserMemberVo) session.getAttribute("loginedUserMemberVo");
+
+        if (loginedUserMemberVo == null) {
+            nextPage = "redirect:/user/member/loginForm";
+        }
+
+        return nextPage;
+    }
+
+    // 회원정보 수정 확인
+    @PostMapping("/modifyAccountConfirm")
+    public String modifyAccountConfirm(UserMemberVo userMemberVo, HttpSession session) {
+        log.info("[UserMemberController] modifyAccountConfirm HAS BEEN CALLED");
+
+        String nextPage = "user/member/modify_account_ok";
+
+        int result = userMemberService.modifyAccountConfirm(userMemberVo);
+
+        if (result > 0) {
+            UserMemberVo loginedUserMemberVo = userMemberService.getLoginedUserMemberVo(userMemberVo.getU_m_no());
+
+            session.setAttribute("loginedUserMemberVo", loginedUserMemberVo);
+            session.setMaxInactiveInterval(60 * 30);
+
+            log.info("[UserMemberController] modifyAccountConfirm: modify success");
+        } else {
+            nextPage = "user/member/modify_account_ng";
+            log.info("[UserMemberController] modifyAccountConfirm: modify failed");
+        }
+
+        return nextPage;
+    }
 }

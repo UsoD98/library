@@ -99,4 +99,69 @@ public class UserMemberDao {
 
         return userMemberVos.size() > 0 ? userMemberVos.get(0) : null;
     }
+
+    // 회원정보 수정
+    public int updateUserAccount(UserMemberVo userMemberVo) {
+        log.info("[UserMemberDao] updateUserAccount HAS BEEN CALLED");
+
+        String sql = "UPDATE tbl_user_member SET "
+                + "u_m_name = ?, "
+                + "u_m_gender = ?, "
+                + "u_m_mail = ?, "
+                + "u_m_phone = ?, "
+                + "u_m_mod_date = NOW() "
+                + "WHERE u_m_no = ?";
+
+        int result = -1;
+
+        try {
+            result = jdbcTemplate.update(sql,
+                    userMemberVo.getU_m_name(),
+                    userMemberVo.getU_m_gender(),
+                    userMemberVo.getU_m_mail(),
+                    userMemberVo.getU_m_phone(),
+                    userMemberVo.getU_m_no());
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return result;
+    }
+
+    // 회원정보 가져오기
+    public UserMemberVo selectUser(int u_m_no) {
+        log.info("[UserMemberDao] selectUser HAS BEEN CALLED");
+
+        String sql = "SELECT * FROM tbl_user_member "
+                + "WHERE u_m_no = ?";
+
+        List<UserMemberVo> userMemberVos = new ArrayList<>();
+
+        try {
+            userMemberVos = jdbcTemplate.query(sql, new RowMapper<UserMemberVo>() {
+                @Override
+                public UserMemberVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+                    UserMemberVo userMemberVo = new UserMemberVo();
+
+                    userMemberVo.setU_m_no(rs.getInt("u_m_no"));
+                    userMemberVo.setU_m_id(rs.getString("u_m_id"));
+                    userMemberVo.setU_m_pw(rs.getString("u_m_pw"));
+                    userMemberVo.setU_m_name(rs.getString("u_m_name"));
+                    userMemberVo.setU_m_gender(rs.getString("u_m_gender"));
+                    userMemberVo.setU_m_mail(rs.getString("u_m_mail"));
+                    userMemberVo.setU_m_phone(rs.getString("u_m_phone"));
+                    userMemberVo.setU_m_reg_date(rs.getString("u_m_reg_date"));
+                    userMemberVo.setU_m_mod_date(rs.getString("u_m_mod_date"));
+
+                    return userMemberVo;
+                }
+            }, u_m_no);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return userMemberVos.size() > 0 ? userMemberVos.get(0) : null;
+    }
 }

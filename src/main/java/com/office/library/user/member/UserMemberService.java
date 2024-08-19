@@ -48,4 +48,18 @@ public class UserMemberService {
 
         return loginedUserMemberVo;
     }
+
+    // 회원정보 수정 확인
+    public int modifyAccountConfirm(UserMemberVo userMemberVo) {
+        log.info("[UserMemberService] modifyAccountConfirm HAS BEEN CALLED");
+
+        return userMemberDao.updateUserAccount(userMemberVo);
+    }
+
+    // 업데이트된 회원정보 가져오기
+    public UserMemberVo getLoginedUserMemberVo(int u_m_no) {
+        log.info("[UserMemberService] getLoginedUserMemberVo HAS BEEN CALLED");
+
+        return userMemberDao.selectUser(u_m_no);
+    }
 }
