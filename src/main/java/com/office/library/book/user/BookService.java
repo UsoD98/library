@@ -48,4 +48,11 @@ public class BookService {
 
         return bookDao.selectRentalBooks(u_m_no);
     }
+
+    // 도서 대출 이력
+    public List<RentalBookVo> listupRentalBookHistory(int u_m_no) {
+        log.info("[BookService] listupRentalBookHistory HAS BEEN CALLED");
+
+        return bookDao.selectRentalBookHistory(u_m_no);
+    }
 }

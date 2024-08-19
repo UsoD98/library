@@ -34,6 +34,7 @@
         <interceptor>
             <mapping path="/book/user/rentalBookConfirm"/>
             <mapping path="/book/user/enterBookshelf"/>
+            <mapping path="/book/user/listupRentalBookHistory"/>
             <mapping path="/user/member/modifyAccountForm"/>
             <mapping path="/user/member/modifyAccountConfirm"/>
             <beans:bean
