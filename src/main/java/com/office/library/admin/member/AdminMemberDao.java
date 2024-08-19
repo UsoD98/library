@@ -2,6 +2,7 @@ package com.office.library.admin.member;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -79,28 +80,8 @@ public class AdminMemberDao {
         List<AdminMemberVo> adminMemberVos = new ArrayList<>();
 
         try {
-            adminMemberVos = jdbcTemplate.query(sql, new RowMapper<AdminMemberVo>() {
-                @Override
-                public AdminMemberVo mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-                    AdminMemberVo adminMemberVo = new AdminMemberVo();
-
-                    adminMemberVo.setA_m_no(rs.getInt("a_m_no"));
-                    adminMemberVo.setA_m_approval(rs.getInt("a_m_approval"));
-                    adminMemberVo.setA_m_id(rs.getString("a_m_id"));
-                    adminMemberVo.setA_m_pw(rs.getString("a_m_pw"));
-                    adminMemberVo.setA_m_name(rs.getString("a_m_name"));
-                    adminMemberVo.setA_m_gender(rs.getString("a_m_gender"));
-                    adminMemberVo.setA_m_part(rs.getString("a_m_part"));
-                    adminMemberVo.setA_m_position(rs.getString("a_m_position"));
-                    adminMemberVo.setA_m_mail(rs.getString("a_m_mail"));
-                    adminMemberVo.setA_m_phone(rs.getString("a_m_phone"));
-                    adminMemberVo.setA_m_reg_date(rs.getString("a_m_reg_date"));
-                    adminMemberVo.setA_m_mod_date(rs.getString("a_m_mod_date"));
-
-                    return adminMemberVo;
-                }
-            }, adminMemberVo.getA_m_id());
+            RowMapper<AdminMemberVo> rowMapper = BeanPropertyRowMapper.newInstance(AdminMemberVo.class);
+            adminMemberVos = jdbcTemplate.query(sql, rowMapper, adminMemberVo.getA_m_id());
 
             if (!passwordEncoder.matches(adminMemberVo.getA_m_pw(),
                     adminMemberVos.get(0).getA_m_pw()))
