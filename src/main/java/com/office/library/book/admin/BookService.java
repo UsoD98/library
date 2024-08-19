@@ -122,4 +122,11 @@ public class BookService {
             return BOOK_ISBN_ALREADY_EXIST;
         }
     }
+
+    // 전체도서 목록
+    public List<BookVo> getAllBooks() {
+        log.info("[BookService] getAllBooks HAS BEEN CALLED");
+
+        return bookDao.selectAllBooks();
+    }
 }

@@ -362,4 +362,42 @@ public class BookDao {
             log.error(e.getMessage());
         }
     }
+
+    // 전체도서 목록 조회
+    public List<BookVo> selectAllBooks() {
+        log.info("[BookDao] selectAllBooks HAS BEEN CALLED");
+
+        String sql = "SELECT * FROM tbl_book "
+                + "ORDER BY b_reg_date DESC";
+
+        List<BookVo> bookVos = new ArrayList<>();
+
+        try {
+            bookVos = jdbcTemplate.query(sql, new RowMapper<BookVo>() {
+                @Override
+                public BookVo mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+                    BookVo bookVo = new BookVo();
+
+                    bookVo.setB_no(rs.getInt("b_no"));
+                    bookVo.setB_thumbnail(rs.getString("b_thumbnail"));
+                    bookVo.setB_name(rs.getString("b_name"));
+                    bookVo.setB_author(rs.getString("b_author"));
+                    bookVo.setB_publisher(rs.getString("b_publisher"));
+                    bookVo.setB_publish_year(rs.getString("b_publish_year"));
+                    bookVo.setB_isbn(rs.getString("b_isbn"));
+                    bookVo.setB_call_number(rs.getString("b_call_number"));
+                    bookVo.setB_rental_able(rs.getInt("b_rental_able"));
+                    bookVo.setB_reg_date(rs.getString("b_reg_date"));
+                    bookVo.setB_mod_date(rs.getString("b_mod_date"));
+
+                    return bookVo;
+                }
+            });
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return bookVos.size() > 0 ? bookVos : null;
+    }
 }

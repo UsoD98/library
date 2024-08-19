@@ -229,4 +229,18 @@ public class BookController {
 
         return nextPage;
     }
+
+    // 전체도서 목록
+    @GetMapping("/getAllBooks")
+    public String getAllBooks(Model model) {
+        log.info("[BookController] getAllBooks HAS BEEN CALLED");
+
+        String nextPage = "admin/book/full_list_of_books";
+
+        List<BookVo> bookVos = bookService.getAllBooks();
+
+        model.addAttribute("bookVos", bookVos);
+
+        return nextPage;
+    }
 }
