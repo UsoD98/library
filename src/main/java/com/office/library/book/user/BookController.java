@@ -1,6 +1,7 @@
 package com.office.library.book.user;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.RentalBookVo;
 import com.office.library.user.member.UserMemberVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,22 @@ public class BookController {
         if (result <= 0) {
             nextPage = "user/book/rental_book_ng";
         }
+
+        return nextPage;
+    }
+
+    // 나의 책장(인터셉트 필요)
+    @GetMapping("/enterBookshelf")
+    public String enterBookshelf(HttpSession session, Model model) {
+        log.info("[BookController] enterBookshelf HAS BEEN CALLED");
+
+        String nextPage = "user/book/bookshelf";
+
+        UserMemberVo loginedUserMemberVo = (UserMemberVo) session.getAttribute("loginedUserMemberVo");
+
+        List<RentalBookVo> rentalBookVos = bookService.enterBookshelf(loginedUserMemberVo.getU_m_no());
+
+        model.addAttribute("rentalBookVos", rentalBookVos);
 
         return nextPage;
     }

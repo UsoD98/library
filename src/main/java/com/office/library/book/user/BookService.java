@@ -1,6 +1,7 @@
 package com.office.library.book.user;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.RentalBookVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,12 @@ public class BookService {
         }
 
         return result;
+    }
+
+    // 나의 책장
+    public List<RentalBookVo> enterBookshelf(int u_m_no) {
+        log.info("[BookService] enterBookshelf HAS BEEN CALLED");
+
+        return bookDao.selectRentalBooks(u_m_no);
     }
 }
