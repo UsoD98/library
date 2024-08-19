@@ -128,9 +128,25 @@ public class BookController {
 
         int result = bookService.requestHopeBookConfirm(hopeBookVo);
 
-        if(result <= 0) {
+        if (result <= 0) {
             nextPage = "user.book/request_hope_book_ng";
         }
+
+        return nextPage;
+    }
+
+    // 희망 도서 요청 목록(인터셉트 필요)
+    @GetMapping("/listupRequestHopeBook")
+    public String listupRequestHopeBook(HttpSession session, Model model) {
+        log.info("[BookController] listupRequestHopeBook HAS BEEN CALLED");
+
+        String nextPage = "user/book/list_hope_book";
+
+        UserMemberVo loginedUserMemberVo = (UserMemberVo) session.getAttribute("loginedUserMemberVo");
+
+        List<HopeBookVo> hopeBookVos = bookService.listupRequestHopeBook(loginedUserMemberVo.getU_m_no());
+
+        model.addAttribute("hopeBookVos", hopeBookVos);
 
         return nextPage;
     }

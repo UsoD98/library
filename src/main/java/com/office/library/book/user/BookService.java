@@ -63,4 +63,11 @@ public class BookService {
 
         return bookDao.insertHopeBook(hopeBookVo);
     }
+
+    // 희망 도서 요청 목록
+    public List<HopeBookVo> listupRequestHopeBook(int u_m_no) {
+        log.info("[BookService] requestHopeBookConfirm HAS BEEN CALLED");
+
+        return bookDao.selectRequestHopeBooks(u_m_no);
+    }
 }

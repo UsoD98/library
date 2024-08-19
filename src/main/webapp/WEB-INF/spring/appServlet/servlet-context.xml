@@ -37,6 +37,7 @@
             <mapping path="/book/user/listupRentalBookHistory"/>
             <mapping path="/book/user/requestHopeBookForm"/>
             <mapping path="/book/user/requestHopeBookConfirm"/>
+            <mapping path="/book/user/listupRequestHopeBook"/>
             <mapping path="/user/member/modifyAccountForm"/>
             <mapping path="/user/member/modifyAccountConfirm"/>
             <beans:bean
