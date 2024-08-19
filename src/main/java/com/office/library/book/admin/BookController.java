@@ -1,6 +1,7 @@
 package com.office.library.book.admin;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.RentalBookVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -139,6 +140,36 @@ public class BookController {
 
         if (result <= 0) {
             nextPage = "admin/book/delete_book_ng";
+        }
+
+        return nextPage;
+    }
+
+    // 대출 도서 목록
+    @GetMapping("/getRentalBooks")
+    public String getRentalBooks(Model model) {
+        log.info("[BookController] getRentalBooks HAS BEEN CALLED");
+
+        String nextPage = "admin/book/rental_books";
+
+        List<RentalBookVo> rentalBookVos = bookService.getRentalBooks();
+
+        model.addAttribute("rentalBookVos", rentalBookVos);
+
+        return nextPage;
+    }
+
+    // 대출 도서 반납 확인
+    @GetMapping("returnBookConfirm")
+    public String returnBookConfirm(@RequestParam("b_no") int b_no, @RequestParam("rb_no") int rb_no) {
+        log.info("[BookController] returnBookConfirm HAS BEEN CALLED");
+
+        String nextPage = "admin/book/return_book_ok";
+
+        int result = bookService.returnBookConfirm(b_no, rb_no);
+
+        if (result <= 0) {
+            nextPage = "admin/book/return_book_ng";
         }
 
         return nextPage;

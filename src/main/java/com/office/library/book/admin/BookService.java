@@ -1,6 +1,7 @@
 package com.office.library.book.admin;
 
 import com.office.library.book.BookVo;
+import com.office.library.book.RentalBookVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,5 +70,27 @@ public class BookService {
         log.info("[BookService] deleteBookConfirm HAS BEEN CALLED");
 
         return bookDao.deleteBook(b_no);
+    }
+
+    // 대출 도서 목록
+    public List<RentalBookVo> getRentalBooks() {
+        log.info("[BookService] getRentalBooks HAS BEEN CALLED");
+
+        return bookDao.selectRentalBooks();
+    }
+
+    // 대출 도서 반납
+    public int returnBookConfirm(int b_no, int rb_no) {
+        log.info("[BookService] returnBookConfirm HAS BEEN CALLED");
+
+        // 대출 도서를 반납 처리
+        int result = bookDao.updateRentalBook(rb_no);
+
+        // 도서의 상태를 대출 가능으로 변경
+        if (result > 0) {
+            result = bookDao.updateBook(b_no);
+        }
+
+        return result;
     }
 }
