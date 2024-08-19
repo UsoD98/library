@@ -56,3 +56,19 @@ CREATE TABLE tbl_rental_book(
 );
 
 select * from tbl_rental_book;
+
+# 희망 도서 요청 테이블
+CREATE TABLE tbl_hope_book(
+    bh_no INT PRIMARY KEY AUTO_INCREMENT,
+    u_m_no INT,
+    hb_name VARCHAR(30) NOT NULL,
+    hb_author VARCHAR(20) NOT NULL,
+    hb_publisher VARCHAR(20),
+    hb_publish_year CHAR(4),
+    hb_reg_date DATETIME,
+    hb_mod_date DATETIME,
+    hb_result TINYINT NOT NULL DEFAULT 0,
+    hb_result_last_date DATETIME
+);
+
+select * from tbl_hope_book;
