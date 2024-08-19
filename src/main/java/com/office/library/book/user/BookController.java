@@ -1,6 +1,7 @@
 package com.office.library.book.user;
 
 import com.office.library.book.BookVo;
+import com.office.library.user.member.UserMemberVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Log4j2
@@ -43,6 +45,28 @@ public class BookController {
         BookVo bookVo = bookService.bookDetail(b_no);
 
         model.addAttribute("bookVo", bookVo);
+
+        return nextPage;
+    }
+
+    // 도서 대출
+    @GetMapping("/rentalBookConfirm")
+    public String rentalBookConfirm(@RequestParam("b_no") int b_no, HttpSession session) {
+        log.info("[BookController] rentalBookConfirm HAS BEEN CALLED");
+
+        String nextPage = "user/book/rental_book_ok";
+
+        UserMemberVo loginedUserMemberVo = (UserMemberVo) session.getAttribute("loginedUserMemberVo");
+
+        if (loginedUserMemberVo == null) {
+            return "redirect:/user/member/loginForm";
+        }
+
+        int result = bookService.rentalBookConfirm(b_no, loginedUserMemberVo.getU_m_no());
+
+        if (result <= 0) {
+            nextPage = "user/book/rental_book_ng";
+        }
 
         return nextPage;
     }

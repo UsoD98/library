@@ -93,4 +93,37 @@ public class BookDao {
 
         return bookVos.size() > 0 ? bookVos.get(0) : null;
     }
+
+    // 도서 대출 정보 추가
+    public int insertRentalBook(int b_no, int u_m_no) {
+        log.info("[BookDao] insertRentalBook HAS BEEN CALLED");
+
+        String sql = "INSERT INTO tbl_rental_book(b_no, u_m_no, rb_start_date, rb_reg_date, rb_mod_date) "
+                + "VALUES(?, ?, NOW(), NOW(), NOW())";
+
+        int result = -1;
+
+        try {
+            result = jdbcTemplate.update(sql, b_no, u_m_no);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        return result;
+    }
+
+    // 도서 대출 가능 여부 수정
+    public void updateRentalBookAble(int b_no) {
+        log.info("[BookDao] updateRentalBookAble HAS BEEN CALLED");
+
+        String sql = "UPDATE tbl_book "
+                + "SET b_rental_able = 0 "
+                + "WHERE b_no = ?";
+
+        try {
+            jdbcTemplate.update(sql, b_no);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
 }

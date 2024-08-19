@@ -27,4 +27,17 @@ public class BookService {
 
         return bookDao.selectBook(b_no);
     }
+
+    // 도서 대출
+    public int rentalBookConfirm(int b_no, int u_m_no) {
+        log.info("[BookService] rentalBookConfirm HAS BEEN CALLED");
+
+        int result = bookDao.insertRentalBook(b_no, u_m_no);
+
+        if (result >= 0) {
+            bookDao.updateRentalBookAble(b_no);
+        }
+
+        return result;
+    }
 }
